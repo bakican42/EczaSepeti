@@ -1,0 +1,27 @@
+<div class="card">
+    <div class="card-body flex-column p-5">
+        <div class="card-rounded bg-light d-flex flex-stack flex-wrap p-5">
+            <ul class="nav flex-wrap border-transparent fw-bolder">
+                <li class="nav-item my-1">
+                    <a class="btn btn-color-gray-600 btn-active-white btn-active-color-primary fw-boldest fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 text-uppercase"
+                        [routerLink]="['/service/carrier']" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}">KURYELER</a>
+                </li>
+                <li class="nav-item my-1">
+                    <a class="btn btn-color-gray-600 btn-active-white btn-active-color-primary fw-boldest fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 text-uppercase"
+                        [routerLink]="['/service/carrier/add']" routerLinkActive="active">
+                        YENİ KAYIT
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <app-service-carrier-list *ngIf="router.url === '/service/carrier'; else elseBlockShow">
+    </app-service-carrier-list>
+
+    <ng-template #elseBlockShow>
+        <router-outlet></router-outlet>
+    </ng-template>
+
+</div>

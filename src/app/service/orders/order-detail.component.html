@@ -1,0 +1,87 @@
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;" *ngIf="orderDetailData.id == 0">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Lütfen bekleyin...</span>
+  </div>
+</div>
+
+
+<div class="container mt-5" *ngIf="orderDetailData.id != 0">
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Sepet:</h3>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let item of orderDetailData.basket">
+          <div class="d-flex justify-content-between">
+            <span>{{ item.medicine_name }}</span>
+            <span>{{ item.fee }}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h3>Ödeme Durumu:</h3>
+      <p>{{ orderDetailData.payment_status }}</p>
+      <h3>Sipariş Adresi:</h3>
+      <p>{{ orderDetailData.user_address }}</p>
+      <h3>Toplam:</h3>
+      <p>{{ orderDetailData.total }}</p>
+      <h3>SGK Toplam:</h3>
+      <p>{{ orderDetailData.SGK_total }}</p>
+
+      <div class="text-end" *ngIf="orderDetailData.order_status === 'taken'">
+        <button class="btn btn-secondary me-5" (click)="onStatusButtonClicked('canceled')">Reddet</button>
+        <button class="btn btn-primary" (click)="onStatusButtonClicked('preparing')">Kabul Et</button>
+      </div>
+
+      <div class="text-end" *ngIf="orderDetailData.order_status === 'preparing' && (courierObservable | async)!.length <= 0">
+        <button class="btn btn-secondary me-5" (click)="onStatusButtonClicked('canceled')">İptal Et</button>
+        <button class="btn btn-primary" (click)="onStatusButtonClicked('on_the_way')">Yola Çıkar</button>
+      </div>
+
+      <div class="text-end" *ngIf="orderDetailData.order_status === 'on_the_way'">
+        <button class="btn btn-secondary me-5" (click)="onStatusButtonClicked('canceled')">İptal Et</button>
+        <button class="btn btn-primary" (click)="onStatusButtonClicked('delivered')">Teslim Et</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<ng-container *ngIf="(courierObservable | async)!.length > 0">
+  <div class="card-body pt-0 table-responsive">
+    <h3>Kurye Seçimi</h3>
+    <div class="card card-flush p-5">
+      <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4 cursor-pointer">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>İsim</th>
+            <th>Soyisim</th>
+            <th>Seç</th>
+          </tr>
+        </thead>
+        <tbody class="border-0">
+          <tr
+            *ngFor="let courier of courierObservable | async"
+          >
+            <td>{{ courier.id }}</td>
+            <td>{{ courier.name }}</td>
+            <td>{{ courier.surname }}</td>
+            <td *ngIf="courier.status === 'wait'">
+              <div (click)="onCourierClick(courier)">
+                <a
+                  class="btn btn-color-gray-600 btn-active-white btn-active-color-primary fw-boldest fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 text-uppercase">
+                  Seç
+                </a>
+              </div>
+            </td>
+            <td *ngIf="courier.status === 'accept'"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+  </div>
+  
+</ng-container>

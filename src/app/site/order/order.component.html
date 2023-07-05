@@ -1,0 +1,386 @@
+<div class="card container">
+    <div class="card-body">
+        <div class="stepper stepper-links d-flex flex-column pt-15">
+            <div class="stepper-nav">
+                <div class="btn btn-icon btn-bg-light me-6 order-progress">
+                    <i class="fas fa-check" *ngIf="step > 0; else elseOne"></i>
+                    <ng-template #elseOne>1</ng-template>
+                </div>
+                <div class="btn btn-icon btn-bg-light me-6 order-progress">
+                    <i class="fas fa-check" *ngIf="step > 1; else eleTwo"></i>
+                    <ng-template #eleTwo>2</ng-template>
+                </div>
+                <div class="btn btn-icon btn-bg-light me-6 order-progress">
+                    <i class="fas fa-check" *ngIf="step > 2; else elseThree"></i>
+                    <ng-template #elseThree>3</ng-template>
+                </div>
+                <div class="btn btn-icon btn-bg-light me-6 order-progress">
+                    <i class="fas fa-check" *ngIf="step > 3; else elseFour"></i>
+                    <ng-template #elseFour>4</ng-template>
+                </div>
+                <div class="btn btn-icon btn-bg-light me-6 order-progress">
+                    <i class="fas fa-check" *ngIf="step > 4; else elseFive"></i>
+                    <ng-template #elseFive>5</ng-template>
+                </div>
+            </div>
+            <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3" *ngIf="step == 1">
+                <div class="text-gray-400 fw-bold fs-4 text-center mt-7" *ngIf="authTab === 'register'">Zaten Bir
+                    Hesabınız Var mı?
+                    <a class="link-primary fw-bolder" [ngClass]="{active: authTab === 'login'}"
+                        (click)="authTabChange('login')">Giriş Yap</a>
+                </div>
+                <div class="text-gray-400 fw-bold fs-4 text-center mt-7" *ngIf="authTab === 'login'">Üye Değil misiniz?
+                    <a class="link-primary fw-bolder" [ngClass]="{active: authTab === 'register'}"
+                        (click)="authTabChange('register')">Kayıt Ol</a>
+                </div>
+                <app-signin-customer (login)="login($event)" *ngIf="authTab === 'login'"></app-signin-customer>
+                <app-signup-customer *ngIf="authTab === 'register'"></app-signup-customer>
+            </div>
+            <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3" *ngIf="step == 2">
+                <h3 class="stepper-title mb-5 mt-5">İlaç Tipi Bilgileri</h3>
+                <div class="w-100">
+                    <div class="mb-5">
+                        <app-shared-custom-select name="İlaç Tipi Seçiniz" [lists]="medicineType"
+                            (selected)="medicineTypeSelected($event)">
+                        </app-shared-custom-select>
+                    </div>
+                    <div class="mb-5" *ngIf="medicineTypeId == 1">
+                        <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                            <thead>
+                                <tr class="fw-bolder text-muted">
+                                    <th class="w-25px">
+                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                            <input class="form-check-input" type="checkbox" value="1">
+                                        </div>
+                                    </th>
+                                    <th>Reçete No</th>
+                                    <th>Reçete Oluşturulma Tarihi</th>
+                                    <th>Reçete Geçerlilik Tarihi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of prescriptionList">
+                                    <td>
+                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                            <input class="form-check-input widget-9-check" type="checkbox"
+                                                [value]="item.id" (change)="checkPrescription(item.code, item.id)">
+                                        </div>
+                                    </td>
+                                    <td>{{item.code}}</td>
+                                    <td>{{item.create_date}}</td>
+                                    <td>{{item.expiry_date}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mb-5" *ngIf="medicineTypeId == 2">
+                        <div class="mb-5">
+                            <app-shared-custom-select name="İl Seçiniz" [lists]="cityList">
+                            </app-shared-custom-select>
+                        </div>
+                        <div class="mb-5">
+                            <app-shared-custom-select name="İlçe Seçiniz" [lists]="districtList">
+                            </app-shared-custom-select>
+                        </div>
+                        <div class="mb-5">
+                            <app-shared-custom-select name="Mahalle Seçiniz" [lists]="townList"
+                                (selected)="townNonMedicineSelected($event)">
+                            </app-shared-custom-select>
+                        </div>
+                        <label class="btn btn-outline btn-outline-dashed d-flex flex-stack text-start p-6 mb-5 mt-5"
+                            *ngFor="let service of services">
+                            <div class="d-flex align-items-center me-2">
+                                <div class="form-check form-check-custom form-check-solid form-check-primary me-6">
+                                    <input class="form-check-input" type="radio" name="address" value="{{service.id}}"
+                                        (click)="chooseServiceAddress(service.id)" />
+                                </div>
+                                <img [src]="'assets/img/eczane.png'" class="offer-service-logo me-5" width="50px"
+                                    height="50px" style="object-fit: contain;" />
+                                <div class="flex-grow-1">
+                                    <h2 class="d-flex align-items-center fs-3 fw-bolder flex-wrap">
+                                        {{service.name}}
+                                    </h2>
+                                    <div class="fw-bold opacity-50">
+                                        {{service.address}}
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3" *ngIf="step == 3">
+                <ng-container *ngIf="medicineTypeId == 1">
+                    <h3 class="stepper-title mb-5 mt-5">Eczane Bilgileri</h3>
+                    <div class="w-100">
+                        <div class="mb-5">
+                            <app-shared-custom-select name="İl Seçiniz" [lists]="cityList">
+                            </app-shared-custom-select>
+                        </div>
+                        <div class="mb-5">
+                            <app-shared-custom-select name="İlçe Seçiniz" [lists]="districtList">
+                            </app-shared-custom-select>
+                        </div>
+                        <div class="mb-5">
+                            <app-shared-custom-select name="Mahalle Seçiniz" [lists]="townList"
+                                (selected)="townMedicineSelected($event)">
+                            </app-shared-custom-select>
+                        </div>
+                        <label class="btn btn-outline btn-outline-dashed d-flex flex-stack text-start p-6 mb-5 mt-5"
+                            *ngFor="let service of services">
+                            <div class="d-flex align-items-center me-2">
+                                <div class="form-check form-check-custom form-check-solid form-check-primary me-6">
+                                    <input class="form-check-input" type="radio" name="address" value="{{service.id}}"
+                                        (click)="chooseServiceAddress(service.id)" />
+                                </div>
+                                <img [src]="'assets/img/eczane.png'" class="offer-service-logo me-5" width="50px"
+                                    height="50px" style="object-fit: contain;" />
+                                <div class="flex-grow-1">
+                                    <h2 class="d-flex align-items-center fs-3 fw-bolder flex-wrap">
+                                        {{service.name}}
+                                    </h2>
+                                    <div class="fw-bold opacity-50">
+                                        {{service.address}}
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="medicineTypeId == 2">
+                    <h3 class="stepper-title mb-5 mt-5">Ürün Bilgileri</h3>
+                    <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
+                        <li class="nav-item">
+                            <a class="nav-link" [ngClass]="{active: authTabs === 'medicine'}"
+                                (click)="authTabsChange('medicine')">Ara</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [ngClass]="{active: authTabs === 'nonMedicine'}"
+                                (click)="authTabsChange('nonMedicine')">Kategoriler</a>
+                        </li>
+                    </ul>
+                    <ng-container *ngIf="authTabs === 'medicine'">
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1"
+                                        transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                    <path
+                                        d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+                                        fill="black"></path>
+                                </svg>
+                            </span>
+                            <input type="text" class="form-control form-control-solid w-250px ps-14" placeholder="Ara"
+                                (keyup)="search($event)">
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-4 border-dashed mb-5"
+                                    *ngFor="let item of searchArray | async">
+                                    <div class="ribbon ribbon-center ribbon-clip mt-7 mb-7">
+                                        <div class="ribbon-label" (click)="addMedicineToBasket(item)"><i class="fas fa-plus-circle"
+                                                style="color: darkgreen; font-size: large;"></i>
+                                            <span class="ribbon-inner" style="background-color: #eff2f5;"></span>
+                                        </div>
+                                    </div>
+                                    <div style="width: 100%; height: auto;" class="mt-5 mb-5">
+                                        <div class="border">
+                                            <img src="assets/img/medicine.jpeg"
+                                                style="width: 100%; height: 100px; object-fit: cover;">
+                                        </div>
+                                        <div class="border">
+                                            <p class="mt-4 text-center" style="color: black;">{{item.medicine_name}}
+                                            </p>
+                                            <p class="mt-2 text-center" style="color: green;">Fiyat: {{item.fee}} TL
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="authTabs === 'nonMedicine'">
+                        <ng-container>
+                            <div class="mb-5">
+                                <app-shared-custom-select name="Kategori Seçiniz" [lists]="categories"
+                                    (selected)="selectCategory($event)">
+                                </app-shared-custom-select>
+                            </div>
+                            <div class="mb-5">
+                                <app-shared-custom-select name="Alt Kategori Seçiniz" [lists]="subCategories"
+                                    (selected)="selectSubCategory($event)">
+                                </app-shared-custom-select>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-4 border-dashed mb-5"
+                                        *ngFor="let item of nonMedicineList">
+                                        <div class="ribbon ribbon-center ribbon-clip mt-7 mb-7">
+                                            <div class="ribbon-label" (click)="addNonMedicineToBasket(item)"><i
+                                                    class="fas fa-plus-circle"
+                                                    style="color: darkgreen; font-size: large;"></i>
+                                                <span class="ribbon-inner" style="background-color: #eff2f5;"></span>
+                                            </div>
+                                        </div>
+                                        <div style="width: 100%; height: auto;" class="mt-5 mb-5">
+                                            <div class="border">
+                                                <img [src]="item.data"
+                                                    style="width: 100%; height: 100px; object-fit: cover;">
+                                            </div>
+                                            <div class="border">
+                                                <p class="mt-4 text-center" style="color: black;">
+                                                    {{item.medicine_name}}</p>
+                                                <p class="mt-2 text-center" style="color: green;">Fiyat:
+                                                    {{item.fee}} TL</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </div>
+            <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3" *ngIf="step == 4">
+                <ng-container *ngIf="medicineTypeId == 1">
+                    <h3 class="stepper-title mb-5 mt-5">Reçete Detay Bilgileriniz</h3>
+                    <div class="w-100">
+                        <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                            <thead>
+                                <tr class="fw-bolder text-muted">
+                                    <th>İlaç Adı Bilgisi</th>
+                                    <th>İlaç Fiyat Bilgisi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of prescriptionDetail">
+                                    <td>{{item.medicine_name}}</td>
+                                    <td>{{item.SGK_fee}} TL</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td>Toplam Fiyat {{total}} TL</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="medicineTypeId == 2">
+                    <h3 class="stepper-title mb-5 mt-5">Ürün Detay Bilgileriniz</h3>
+                    <div class="w-100">
+                        <ng-container *ngIf="medicineContent">
+                            <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                                <thead>
+                                    <tr class="fw-bolder text-muted">
+                                        <th>İlaç Adı Bilgisi</th>
+                                        <th>İlaç Fiyat Bilgisi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of medicineContent">
+                                        <td>{{item.medicine_name}}</td>
+                                        <td>{{item.fee}} TL</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td>Toplam Fiyat {{getMedicineBascetTotal}} TL</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </ng-container>
+                        <ng-container *ngIf="nonMedicineContent">
+                            <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                                <thead>
+                                    <tr class="fw-bolder text-muted">
+                                        <th>İlaç Adı Bilgisi</th>
+                                        <th>İlaç Fiyat Bilgisi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of nonMedicineContent">
+                                        <td>{{item.medicine_name}}</td>
+                                        <td>{{item.fee}} TL</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td>Toplam Fiyat {{getNonMedicineBascetTotal}} TL</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </ng-container>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3" *ngIf="step == 5">
+                <h3 class="stepper-title mb-5 mt-5" *ngIf="step == 5">Ödeme İşlemleri</h3>
+                <div class="w-100">
+                    <form novalidate="novalidate" action="#" class="card-details" [formGroup]="formGroup">
+                        <div class="col">
+                            <h3>Teslimat Adresi</h3>
+                            <div class="rounded border-danger border border-dashed p-6 mb-5">
+                                <textarea class="form-control" formControlName="user_address"
+                                    placeholder="Teslimat Adresi Giriniz."></textarea>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h3>Kart Bilgileri</h3>
+                            <div class="rounded border-danger border border-dashed p-6 mb-5">
+                                <div class="card mx-auto">
+
+                                    <div class="form-group mb-3">
+                                        <p class="mb-1">Kart Sahibinin Adı</p>
+                                        <input type="text" placeholder="Adı Soyadı" class="form-control"
+                                            formControlName="card_name">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <p class="mb-1">Kart Numarası</p>
+                                        <div class="input-group">
+                                            <input type="text" placeholder="1234 5678 9012 3457" class="form-control"
+                                                minlength="19" maxlength="19" formControlName="card_no"
+                                                (input)="formatCardNo()">
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <p class="mb-1">Son Kullanma Tarihi</p>
+                                                <input type="text" class="form-control" placeholder="AA/YY"
+                                                    maxlength="5" formControlName="expired_date"
+                                                    (input)="formatExpirationDate()">
+                                            </div>
+                                            <div class="col-4">
+                                                <p class="mb-1">CVV</p>
+                                                <input type="text" class="form-control"
+                                                    placeholder="&#9679;&#9679;&#9679;" minlength="3" maxlength="3"
+                                                    formControlName="cvv">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 d-flex flex-stack pt-15">
+                <div class="mr-2">
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-lg btn-primary me-3" *ngIf="step == 5" (click)="createOrder()">
+                        <span class="indicator-label">Sipariş Oluştur</span>
+                    </button>
+                    <button type="button" class="btn btn-lg btn-primary" *ngIf="nextButton()"
+                        (click)="stepChange(step+1, true)">Sonraki
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

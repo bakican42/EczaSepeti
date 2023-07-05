@@ -1,0 +1,6 @@
+<app-order-list *ngIf="router.url === '/customer'; else elseBlockShow">
+</app-order-list>
+
+<ng-template #elseBlockShow>
+    <router-outlet></router-outlet>
+</ng-template>

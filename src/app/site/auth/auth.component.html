@@ -1,0 +1,50 @@
+<div class="d-flex flex-column flex-root">
+    <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+        <div class="d-flex flex-column flex-lg-row-auto w-xl-600px positon-xl-relative"
+            style="background-color: #F2C98A">
+            <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px">
+                <div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
+                    <a [routerLink]="['/']" class="py-9 mb-5">
+                        <img class="img-fluid" src="assets/img/logo.png" alt="Logo"/>
+                    </a>
+                    <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #986923;">Ecza Sepeti</h1>
+                    <p class="fw-bold fs-2" style="color: #986923;">Kurumsal bir hizmet ağı olan Ecza Sepeti,
+                        yalnızca Dünyaya odaklanarak hizmet veren, özel olarak seçilmiş eczaneleri
+                        ile Türkiye geneline yaygın garantili hizmet veriyor.</p>
+                    <p class="fw-bold fs-2" style="color: #986923;">Ecza Sepeti, Ecza Kalite Standartlarında eczane hizmeti sunmak isteyen işletmelere,
+                        Türkiye geneline yaygın olarak Şube imkanını sağlıyor.</p>
+                </div>
+                <div
+                    class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px">
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-column flex-lg-row-fluid py-10" style="background-color: white;">
+            <div class="text-gray-400 fw-bold fs-4 text-center mt-7" *ngIf="authTab === 'register'">
+                <h1 class="text-dark mb-3">Yeni Hesap Oluştur</h1>
+                <div>
+                    Zaten Bir Hesabınız Var mı?
+                    <a class="link-primary fw-bolder" [ngClass]="{active: authTab === 'login'}"
+                        (click)="authTabChange('login')">Giriş Yap</a>
+                </div>
+            </div>
+            <div class="text-gray-400 fw-bold fs-4 text-center mt-7" *ngIf="authTab === 'login'">
+                <h1 class="text-dark mb-3">Giriş Yap</h1>
+                <div>
+                    Üye Değil misiniz?
+                    <a class="link-primary fw-bolder" [ngClass]="{active: authTab === 'register'}"
+                        (click)="authTabChange('register')">Kayıt Ol</a>
+                </div>
+            </div>
+            <app-signin-pharmacy *ngIf="authTab === 'login'"></app-signin-pharmacy>
+            <app-signup-pharmacy *ngIf="authTab === 'register'"></app-signup-pharmacy>
+            <div class="d-flex flex-center flex-wrap fs-6 p-5 pb-0">
+                <div class="d-flex flex-center fw-bold fs-6">
+                    <a class="text-muted text-hover-primary px-2" target="_blank">Hakkımızda</a>
+                    <a class="text-muted text-hover-primary px-2" target="_blank">Destek</a>
+                    <a class="text-muted text-hover-primary px-2" target="_blank">Satın Al</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

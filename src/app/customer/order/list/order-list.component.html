@@ -1,0 +1,125 @@
+<div class="card card-flush">
+  <div class="card-body flex-column p-2">
+    <div class="card-rounded bg-light d-flex flex-stack flex-wrap p-2">
+      <ul class="nav flex-wrap border-transparent fw-bolder">
+        <li class="nav-item my-1">
+          <a
+            class="btn btn-color-gray-600 btn-active-white btn-active-color-primary fw-boldest fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 text-uppercase"
+            (click)="onTakenClick()"
+            >Yeni Sipariş</a
+          >
+        </li>
+        <li class="nav-item my-1">
+          <a
+            class="btn btn-color-gray-600 btn-active-white btn-active-color-primary fw-boldest fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 text-uppercase"
+            (click)="onPrepairingClick()"
+            >Hazırlanıyor</a
+          >
+        </li>
+        <li class="nav-item my-1">
+          <a
+            class="btn btn-color-gray-600 btn-active-white btn-active-color-primary fw-boldest fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 text-uppercase"
+            (click)="onOnTheWayClick()"
+            >Yolda</a
+          >
+        </li>
+        <li class="nav-item my-1">
+          <a
+            class="btn btn-color-gray-600 btn-active-white btn-active-color-primary fw-boldest fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 text-uppercase"
+            (click)="onDeliveredClick()"
+            >Teslim Edildi</a
+          >
+        </li>
+        <li class="nav-item my-1">
+          <a
+            class="btn btn-color-gray-600 btn-active-white btn-active-color-primary fw-boldest fs-8 fs-lg-base nav-link px-3 px-lg-8 mx-1 text-uppercase"
+            (click)="onCanceledClick()"
+            >İptal Edildi</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-body pt-0 table-responsive">
+    <div
+      class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6 mb-5"
+      *ngIf="ordersObservable && (ordersObservable | async)!.length <= 0"
+    >
+      <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <rect
+            opacity="0.3"
+            x="2"
+            y="2"
+            width="20"
+            height="20"
+            rx="10"
+            fill="black"
+          ></rect>
+          <rect
+            x="11"
+            y="14"
+            width="7"
+            height="2"
+            rx="1"
+            transform="rotate(-90 11 14)"
+            fill="black"
+          ></rect>
+          <rect
+            x="11"
+            y="17"
+            width="2"
+            height="2"
+            rx="1"
+            transform="rotate(-90 11 17)"
+            fill="black"
+          ></rect>
+        </svg>
+      </span>
+      <div class="d-flex flex-stack flex-grow-1">
+        <div class="fw-bold">
+          <div class="text-gray-700">Bu statüde sipariş bulunmamaktadır.</div>
+        </div>
+      </div>
+    </div>
+    <table
+      class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4 cursor-pointer"
+      *ngIf="ordersObservable && (ordersObservable | async)!.length > 0"
+    >
+      <thead>
+        <tr class="border-0">
+          <th class="fw-bolder">ID</th>
+          <th class="fw-bolder">Sepet Tutarı</th>
+          <th class="fw-bolder">Sipariş Tarihi</th>
+          <th class="fw-bolder">İşlemler</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let item of ordersObservable | async">
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.SGK_total ?? item.total }} TL</td>
+            <td>{{ item.created_at | date : "dd.MM.yyyy" }}</td>
+            <td>
+              <a
+                class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary me-1"
+                [routerLink]="['/customer/order/' + item.id]"
+                routerLinkActive="router-link-active"
+              >
+                <span class="svg-icon svg-icon-2">
+                  <i class="fas fa-lg fa-eye"></i>
+                </span>
+              </a>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

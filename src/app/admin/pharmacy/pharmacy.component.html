@@ -1,0 +1,6 @@
+<app-pharmacy-list *ngIf="router.url === '/admin/pharmacy'; else elseBlockShow">
+</app-pharmacy-list>
+
+<ng-template #elseBlockShow>
+    <router-outlet></router-outlet>
+</ng-template>

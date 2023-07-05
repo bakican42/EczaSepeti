@@ -1,0 +1,67 @@
+<div class="card mb-5 mb-xl-8">
+  <div class="card-body py-3">
+    <!-- Category Selection -->
+    <div class="form-group">
+      <label for="category">Kategori</label>
+      <app-shared-custom-select
+        name="Kategori Seçin"
+        [lists]="categoriesObservable | async"
+        (selected)="onCategorySelected($event)"
+      >
+      </app-shared-custom-select>
+    </div>
+
+    <div class="p-2"></div>
+
+    <div class="form-group">
+      <label for="category">Alt Kategori</label>
+      <app-shared-custom-select
+        name="Alt Kategori Seçin"
+        [lists]="subCategoriesObservable | async"
+        (selected)="onSubCategorySelected($event)"
+      >
+      </app-shared-custom-select>
+    </div>
+
+    <div class="p-2"></div>
+    
+    <div class="table-responsive">
+      <table
+        class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
+      >
+        <thead>
+          <tr class="fw-bolder text-muted">
+            <th>Ürün İsmi</th>
+            <th>Stok</th>
+            <th>Fiyat</th>
+            <th>Açıklama</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of medicinesObservable | async">
+            <td>
+              <span class="text-muted fw-bold d-block fs-7">{{
+                item.medicine_name
+              }}</span>
+            </td>
+            <td>
+              <span class="text-muted fw-bold d-block fs-7">{{
+                item.stock
+              }}</span>
+            </td>
+            <td>
+              <span class="text-muted fw-bold d-block fs-7">{{
+                item.fee
+              }}</span>
+            </td>
+            <td>
+              <span class="text-muted fw-bold d-block fs-7">{{
+                item.definition
+              }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

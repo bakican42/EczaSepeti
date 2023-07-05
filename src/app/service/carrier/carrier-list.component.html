@@ -1,0 +1,37 @@
+<div class="card mb-5 mb-xl-8">
+    <div class="card-body py-3">
+        <div class="table-responsive">
+            <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                <thead>
+                    <tr class="fw-bolder text-muted">
+                        <th>Ad Soyad</th>
+                        <th>Email</th>
+                        <th>Cep Telefonu</th>
+                        <th>Durum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of carrierList">
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex justify-content-start flex-column">
+                                    <a class="text-dark fw-bolder text-hover-primary fs-6">{{item.name}} {{item.surname}}</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="text-muted fw-bold d-block fs-7">{{item.email}}</span>
+                        </td>
+                        <td>
+                            <span class="text-muted fw-bold d-block fs-7">{{item.mobile}}</span>
+                        </td>
+                        <td>
+                            <span class="badge badge-light-success" *ngIf="item.status == 'accept'">Aktif</span>
+                            <span class="badge badge-light-info" *ngIf="item.status == 'wait'">Beklemede</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

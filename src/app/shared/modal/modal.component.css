@@ -1,0 +1,10 @@
+.modal{
+    background-color: #00000094;
+    display: none;
+}
+.show{
+    display: block;
+}
+.modal-content{
+    margin-top: 10%;
+}

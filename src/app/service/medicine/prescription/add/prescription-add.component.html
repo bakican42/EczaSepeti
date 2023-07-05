@@ -1,0 +1,67 @@
+<div class="container">
+  <!-- Category Selection -->
+  <div class="form-group">
+    <label for="category">Kategori</label>
+    <app-shared-custom-select
+      name="Kategori Seçin"
+      [lists]="categoriesObservable | async"
+      (selected)="onCategorySelected($event)"
+    >
+    </app-shared-custom-select>
+  </div>
+
+  <div class="p-2"></div>
+
+  <div class="form-group">
+    <label for="category">Alt Kategori</label>
+    <app-shared-custom-select
+      name="Alt Kategori Seçin"
+      [lists]="subCategoriesObservable | async"
+      (selected)="onSubCategorySelected($event)"
+    >
+    </app-shared-custom-select>
+  </div>
+
+  <div class="p-2"></div>
+
+  <form (ngSubmit)="addMedicine()" #drugForm="ngForm">
+    <div class="form-group">
+      <label for="name">İlaç Adı</label>
+      <input type="text" class="form-control" id="name" required [(ngModel)]="medicineModel.medicine_name" name="name">
+    </div>
+
+    <div class="p-2"></div>
+
+    <div class="form-group">
+      <label for="description">Literatür Adı</label>
+      <input type="text" class="form-control" id="description" required [(ngModel)]="medicineModel.pharmacology_name" name="description">
+    </div>
+
+    <div class="p-2"></div>
+
+    <div class="form-group">
+      <label for="stocks">Stok Adedi</label>
+      <input type="number" class="form-control" id="stocks" required [(ngModel)]="medicineModel.stock" name="stocks">
+    </div>  
+
+    <div class="p-2"></div>
+
+    <div class="form-group">
+      <label for="stocks">Fiyat</label>
+      <input type="number" class="form-control" id="stocks" required [(ngModel)]="medicineModel.fee" name="stocks">
+    </div> 
+
+    <div class="p-2"></div>
+
+    <div class="form-group">
+      <label for="stocks">SGK Fiyat</label>
+      <input type="number" class="form-control" id="stocks" required [(ngModel)]="medicineModel.SGK_fee" name="stocks">
+    </div> 
+
+    <div class="p-5"></div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="isSaving">İlaç Ekle</button>
+
+    <div class="p-2"></div>
+  </form>
+</div>

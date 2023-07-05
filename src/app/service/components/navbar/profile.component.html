@@ -1,0 +1,20 @@
+<div class="menu-item px-3">
+    <div class="menu-content d-flex align-items-center px-3">
+        <div class="symbol symbol-50px me-5">
+            <img alt="Logo" [src]="userService.get.img" />
+        </div>
+        <div class="d-flex flex-column">
+            <div class="fw-bolder d-flex align-items-center fs-6">
+                {{userService.get.name}} {{userService.get.surname}}
+            </div>
+            <a class="fw-bold text-muted text-hover-primary fs-9">{{userService.get.email}}</a>
+        </div>
+    </div>
+</div>
+<div class="separator my-2"></div>
+<div class="menu-item px-5">
+    <a [routerLink]="['/service/account']" class="menu-link px-5">Hesabım</a>
+</div>
+<div class="menu-item px-5">
+    <a class="menu-link px-5" (click)="logout()">Çıkış Yap</a>
+</div>

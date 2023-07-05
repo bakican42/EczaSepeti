@@ -1,0 +1,8 @@
+<span>
+    <input type="text" class="form-control" (keyup)="inputValue($event)" [placeholder]="name" #sharedInput
+        (click)="select($event)" (dblclick)="clear($event)" (focusout)=focusout($event)>
+    <ul *ngIf="showList">
+        <li *ngFor="let list of customList" [attr.data-id]="list.id" [attr.data-value]="list.name"
+            (click)="selectValue($event)">{{list.name}}</li>
+    </ul>
+</span>

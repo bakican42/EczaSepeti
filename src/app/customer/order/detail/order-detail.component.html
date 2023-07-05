@@ -1,0 +1,38 @@
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;" *ngIf="!orderDetailData">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Lütfen bekleyin...</span>
+  </div>
+</div>
+
+
+<div class="container mt-5" *ngIf="orderDetailData">
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Sepet:</h3>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let item of orderDetailData.basket">
+          <div class="d-flex justify-content-between">
+            <span>{{ item.medicine_name }}</span>
+            <span>{{ item.fee }}TL</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h3>Ödeme Durumu:</h3>
+      <p>Ödeme Başarılı</p>
+      <h3>Sipariş Adresi:</h3>
+      <p>{{ orderDetailData.user_address }}</p>
+      <h3>Toplam:</h3>
+      <p>{{ orderDetailData.total }} TL</p>
+      <h3>SGK Toplam:</h3>
+      <p>{{ orderDetailData.SGK_total }}</p>
+
+      <div class="text-end" *ngIf="['taken', 'preparing', 'on_the_way'].includes(orderDetailData.order_status)">
+        <button class="btn btn-secondary me-5" (click)="onStatusButtonClicked()">İptal Et</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

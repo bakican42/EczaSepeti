@@ -1,0 +1,29 @@
+<div class="d-flex flex-column flex-root header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed"
+    [attr.data-kt-aside-minimize]="userService.get.sidebarShrink ? 'on' : 'off'">
+    <div class="page d-flex flex-row flex-column-fluid">
+
+        <!-- SIDEBAR -->
+        <app-service-sidebar></app-service-sidebar>
+
+        <div class="wrapper d-flex flex-column flex-row-fluid">
+
+            <!-- NAVBAR -->
+            <app-service-navbar></app-service-navbar>
+
+            <div class="content d-flex flex-column flex-column-fluid" style="margin-top: 50px;">
+                <div class="post d-flex flex-column-fluid">
+                    <div class="container-fluid">
+
+                        <!-- ROUTER -->
+                        <router-outlet></router-outlet>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <app-service-footer></app-service-footer>
+
+        </div>
+    </div>
+</div>

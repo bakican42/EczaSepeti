@@ -1,0 +1,39 @@
+<div class="aside aside-dark aside-hoverable">
+  <div class="aside-logo flex-column-auto">
+    <a [routerLink]="['/admin']" routerLinkActive="active">
+      <img src="assets/img/logo.png" class="logo h-100px" style="width: 95%" />
+    </a>
+    <div class="btn btn-icon" (click)="shrink()">
+      <i
+        class="fas fa-angle-double-left"
+        style="font-size: 20px; color: #d12326"
+        *ngIf="!userService.get.sidebarShrink"
+      ></i>
+      <i
+        class="fas fa-angle-double-right"
+        style="font-size: 20px; color: #d12326"
+        *ngIf="userService.get.sidebarShrink"
+      ></i>
+    </div>
+  </div>
+  <div class="aside-menu flex-column-fluid">
+    <div class="my-5 my-lg-5">
+      <div class="menu menu-column">
+        <ng-container>
+          <div class="menu-item" (click)="toggle($event)">
+            <a
+              class="menu-link"
+              [routerLink]="['/admin/pharmacy']"
+              routerLinkActive="active"
+            >
+              <span class="menu-icon">
+                <i class="fas fa-lg fa-recycle"></i>
+              </span>
+              <span class="menu-title">Eczaneler</span>
+            </a>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

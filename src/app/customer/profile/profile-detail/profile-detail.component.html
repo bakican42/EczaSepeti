@@ -1,0 +1,59 @@
+<div class="card card-flush" *ngIf="userProfile">
+  <div class="card-body flex-column p-2">
+    <form class="form" (ngSubmit)="formSubmit()" #drugForm="ngForm">
+      <div class="card-body">
+        <div class="row mb-5">
+          <div class="col-xl-3">
+            <div class="fs-6 fw-bold">Adınız</div>
+          </div>
+          <div class="col-xl-9">
+            <input type="text" class="form-control" [value]="userProfile.name" [disabled]="true" />
+          </div>
+        </div>
+        <div class="row mb-5">
+          <div class="col-xl-3">
+            <div class="fs-6 fw-bold">Soyadınız</div>
+          </div>
+          <div class="col-xl-9">
+            <input type="text" class="form-control" [value]="userProfile.surname" [disabled]="true" />
+          </div>
+        </div>
+        <div class="row mb-5">
+          <div class="col-xl-3">
+            <div class="fs-6 fw-bold">Tc Kimlik No</div>
+          </div>
+          <div class="col-xl-9">
+            <input
+              type="text"
+              minlength="11"
+              maxlength="11"
+              class="form-control percentage"
+              [value]="userProfile.TC_no"
+              [disabled]="true"
+            />
+          </div>
+        </div>
+        <div class="row mb-5">
+          <div class="col-xl-3">
+            <div class="fs-6 fw-bold required">Email</div>
+          </div>
+          <div class="col-xl-9">
+            <input type="text" class="form-control" id="email" name="email" required [value]="userProfile.email" [(ngModel)]="userProfile.email" />
+          </div>
+        </div>
+        <div class="row mb-5">
+          <div class="col-xl-3">
+            <div class="fs-6 fw-bold required">Telefon</div>
+          </div>
+          <div class="col-xl-9">
+            <input type="text" class="form-control" id="mobile" name="mobile" required  [value]="userProfile.mobile" [(ngModel)]="userProfile.mobile" />
+          </div>
+        </div>
+      </div>
+      <div class="card-footer d-flex justify-content-end py-6 px-9">
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+      </div>
+    </form>
+  </div>
+</div>
+

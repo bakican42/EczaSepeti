@@ -1,0 +1,6 @@
+<app-profile-detail *ngIf="router.url === '/customer/profile'; else elseBlockShow">
+</app-profile-detail>
+
+<ng-template #elseBlockShow>
+    <router-outlet></router-outlet>
+</ng-template>
